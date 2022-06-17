@@ -1,0 +1,2 @@
+Database name : products
+http://localhost/php_basic_2/index.php
