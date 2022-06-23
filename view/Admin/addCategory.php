@@ -9,23 +9,23 @@
 
 
 require("../../db/connection.php");
-require("../../services/services.php");
 require("../../services/serviceAdmin.php");
+require("../../services/services.php");
 if (!isset($_SESSION['account'])) {
     header('location:../../index.php');
     exit;
 }
-if ($_SESSION['account'][key($_SESSION['account'])] == 1) : ?>
-    <?php
+if ($_SESSION['account'][key($_SESSION['account'])] == 1) :
+?>
 
+
+    <?php
     $result = get_categorys_list($conn);
     while ($row = mysqli_fetch_assoc($result)) {
         $categorys_list[] = $row;
     }
 
     ?>
-
-
 
     <body>
         <div class="wrapper">
@@ -47,78 +47,51 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 1) : ?>
                 <div class="content">
                     <div class="container-fluid">
                         <div class="card-body">
-                            <form action="../../services/serviceAdmin.php?action=createProduct" method="POST" enctype="multipart/form-data">
-                                <?php if (isset($_SESSION['success'])) : ?>
-                                    <p style="color: green;"><?php echo $_SESSION['success'];  ?></p>
-                                    <?php unset($_SESSION['success']); ?>
-                                <?php endif; ?>
+                            <?php if (isset($_SESSION['success'])) : ?>
+                                <?php session_start();  ?>
+                                <p style="color: green;"><?php echo $_SESSION['success'];  ?></p>
+                                <?php unset($_SESSION['success']); ?>
+                            <?php endif; ?>
+                            <form action="../../services/serviceAdmin.php?action=createCategory" method="POST" enctype="multipart/form-data">
+
                                 <div class="row">
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
-                                            <label>Name account</label>
-                                            <input type="hidden" name="user_ID" class="form-control" disabled="" value="<?php echo mysqli_fetch_assoc(getNameAccountByID($conn))['id'] ?>">
-                                            <samp class="form-control" disabled=""><?php echo mysqli_fetch_assoc(getNameAccountByID($conn))['account_name'] ?></samp>
+                                            <label>Name category</label>
+                                            <input type="text" name="category_name" placeholder="Tên danh mục" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6 px-1">
                                         <div class="form-group">
                                             <label>Category</label>
                                             <select name="parent_ID" class="form-control">
-                                                <?php showCategoriesAddProduct($categorys_list)  ?>
+                                                <option value="0">Danh mục cha</option>
+                                                <?php showCategoriesAU($categorys_list); ?>
                                             </select>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" required name="name" placeholder="name" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class=" row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Title</label>
-                                            <textarea name="title" required class="form-control" style="height: 60px;" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <textarea name="description" required class="form-control" style="height: 60px;" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 pr-1">
-                                        <div class="form-group">
-                                            <label>Price</label>
-                                            <input type="text" name="price" class="form-control" placeholder="Price" value="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 pl-1">
-                                        <div class="form-group">
-                                            <label>Quantity</label>
-                                            <input type="text" required class="form-control" name="qty" placeholder="Quantity" value="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="menu">File input</label>
 
 
-                                    <input type="file" name="file" class="form-control" id="uploadImageProduct">
-                                    <div id="image_show">
 
+
+                                <div class="form-group m-4">
+                                    <label> Kích hoạt</label>
+                                    <div class="form-group">
+
+                                        <div class="custom-control custom-radio">
+                                            <input value="1" type="radio" id="active" name="active" checked="">
+                                            <label style="margin-left:10px ;" for="active" class="custom-control-label">Có</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input value="0" type="radio" id="no_active" name="active">
+                                            <label style="margin-left:10px ;" for="no_active" class="custom-control-label">Không</label>
+                                        </div>
                                     </div>
-                                    <input type="hidden" name="NameImage" id="file">
-
                                 </div>
+
+
                                 <button type="submit" class="btn btn-info btn-fill pull-right">Thêm</button>
                                 <div class="clearfix"></div>
                             </form>

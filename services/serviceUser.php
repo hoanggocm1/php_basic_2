@@ -17,3 +17,8 @@ function getProductByID($conn, $id)
         return mysqli_query($conn, "SELECT * FROM products where id='" . $id . "'");
     }
 }
+function get_categorys_list($conn)
+{
+    $sql = "SELECT * FROM categorys";
+    return  mysqli_query($conn, $sql);
+}

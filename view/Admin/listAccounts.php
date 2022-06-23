@@ -39,6 +39,9 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 1) : ?>
                             <?php unset($_SESSION['success']); ?>
                         <?php endif; ?>
                         <!-- <a href="addProduct.php" class="btn btn-info btn-fill pull-left">Thêm</a> -->
+                        <div class="col-md-1 px-1">
+                            <a href="addAccount.php" class="btn btn-info btn-fill pull-left">Thêm</a>
+                        </div>
                         <table class="table">
                             <thead>
                                 <tr>

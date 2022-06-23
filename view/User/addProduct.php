@@ -10,25 +10,20 @@
 
 require("../../db/connection.php");
 require("../../services/services.php");
+require("../../services/serviceUser.php");
 if (!isset($_SESSION['account'])) {
     header('location:../../index.php');
     exit;
 }
+
+$result = get_categorys_list($conn);
+while ($row = mysqli_fetch_assoc($result)) {
+    $categorys_list[] = $row;
+}
+
+
+
 if ($_SESSION['account'][key($_SESSION['account'])] == 2) : ?>
-    <?php
-
-    // require("../../db/connection.php");
-
-    // var_dump(mysqli_fetch_assoc($user_list));
-    // die;
-    // print_r(mysqli_fetch_object($user_list));  
-    // $name = mysqli_fetch_assoc(getNameAccountByID($conn));
-    // $name1 = mysqli_fetch_assoc($name);
-    // echo (mysqli_fetch_assoc(getCategory($conn))['name']);
-    // die;
-    ?>
-
-
 
     <body>
         <div class="wrapper">
@@ -67,12 +62,8 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 2) : ?>
                                         <div class="form-group">
                                             <label>Category</label>
                                             <select name="parent_ID" class="form-control">
-                                                <?php $categorys = getCategory($conn); ?>
-                                                <?php while ($category = mysqli_fetch_assoc($categorys)) :  ?>
-                                                    <option value="<?php echo $category['id'];  ?>"><?php echo $category['category_name'];  ?></option>
-                                                <?php endwhile; ?>
+                                                <?php showCategoriesAU($categorys_list); ?>
                                             </select>
-                                            <!-- <input type="text" class="form-control" placeholder="Category" value="michael23"> -->
                                         </div>
                                     </div>
 

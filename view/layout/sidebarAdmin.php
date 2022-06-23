@@ -17,6 +17,12 @@
         </a>
     </li>
     <li>
+        <a class="nav-link" href="/php_basic_2/view/Admin/listCategorys.php">
+            <i class="nc-icon nc-circle-09"></i>
+            <p>Quản lý danh mục</p>
+        </a>
+    </li>
+    <li>
         <a class="nav-link" href="/php_basic_2/view/Admin/listProducts.php">
             <i class="nc-icon nc-circle-09"></i>
             <p>Quản lý sản phẩm</p>

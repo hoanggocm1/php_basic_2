@@ -8,12 +8,7 @@ function getNameAccountByID($conn)
     }
 }
 
-function getProductByID($conn, $id)
-{
-    if (isset($_SESSION['account'])) {
-        return mysqli_query($conn, "SELECT * FROM products where id='" . $id . "'");
-    }
-}
+
 
 function getCategory($conn)
 {
@@ -157,5 +152,35 @@ if (isset($_GET['action']) && $_GET['action'] == 'register') {
         $_SESSION['success'] = 'Mật khẩu xác nhận không đúng!';
         header("Location:../registration.php");
         exit;
+    }
+}
+
+
+function showCategoriesAU($categories, $parent_id = 0, $char = '')
+
+{
+
+    foreach ($categories as $key => $item) {
+        if ($item['parent_ID'] == $parent_id) {
+            echo '<option value="' . $item['id'] . '">';
+            echo $char . $item['category_name'];
+            echo '</option>';
+            unset($categories[$key]);
+            showCategoriesAU($categories, $item['id'], $char . ' ---- ||');
+        }
+    }
+}
+
+function showCategoriesAddProduct($categories, $parent_id = 0, $char = '')
+
+{
+    foreach ($categories as $key => $item) {
+        if ($item['parent_ID'] == $parent_id) {
+            echo '<option value="' . $item['id'] . '">';
+            echo $char . $item['category_name'];
+            echo '</option>';
+            unset($categories[$key]);
+            showCategoriesAU($categories, $item['id'], $char . ' ---- ||');
+        }
     }
 }
