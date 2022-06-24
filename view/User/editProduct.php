@@ -10,6 +10,8 @@
 
 require("../../db/connection.php");
 require("../../services/services.php");
+require("../../services/serviceUser.php");
+
 if (!isset($_SESSION['account'])) {
     header('location:../../index.php');
     exit;
@@ -17,13 +19,13 @@ if (!isset($_SESSION['account'])) {
 if ($_SESSION['account'][key($_SESSION['account'])] == 2) : ?>
     <?php
     // require("../../db/connection.php");
-    $product = mysqli_fetch_assoc(getProductByID($conn, $_GET['id']))
+    $product = mysqli_fetch_assoc(getProductByID($conn, $_GET['id']));
 
-    // print_r(mysqli_fetch_object($user_list));  
-    // $name = mysqli_fetch_assoc(getNameAccountByID($conn));
-    // $name1 = mysqli_fetch_assoc($name);
-    // echo (mysqli_fetch_assoc(getCategory($conn))['name']);
-    // die;
+
+    $result = get_categorys_list_user($conn);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $categorys_list[] = $row;
+    }
     ?>
 
 
@@ -31,11 +33,7 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 2) : ?>
     <body>
         <div class="wrapper">
             <div class="sidebar" data-image="/php_basic_2/assets/img/sidebar-5.jpg">
-                <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-        Tip 2: you can also add an image using data-image tag
-    -->
                 <div class="sidebar-wrapper">
                     <?php include("../layout/sidebar.php"); ?>
                 </div>
@@ -68,12 +66,7 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 2) : ?>
                                         <div class="form-group">
                                             <label>Category</label>
                                             <select name="parent_ID" class="form-control">
-                                                <?php $categorys = getCategory($conn); ?>
-                                                <?php while ($category = mysqli_fetch_assoc($categorys)) :  ?>
-                                                    <option value="<?php echo $category['id']; ?>" <?php if ($product['parent_ID'] == $category['id']) {
-                                                                                                        echo 'selected=""';
-                                                                                                    } ?>><?php echo $category['category_name'];  ?></option>
-                                                <?php endwhile; ?>
+                                                <?php showCategoriesU_edit($categorys_list, $product['parent_ID'])  ?>
                                             </select>
 
                                         </div>

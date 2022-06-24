@@ -225,7 +225,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'createCategory') {
 function showCategoriesAU_edit($categories, $id, $parent_id = 0, $char = '')
 
 {
-
     foreach ($categories as $key => $item) {
         if ($item['parent_ID'] == $parent_id) {
             if ($id == $item['id']) {

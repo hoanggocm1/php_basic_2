@@ -57,7 +57,6 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 1) : ?>
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Name account</label>
-
                                             <samp class="form-control" disabled=""><?php echo $product['account_name']; ?></samp>
                                         </div>
                                     </div>
@@ -65,7 +64,7 @@ if ($_SESSION['account'][key($_SESSION['account'])] == 1) : ?>
                                         <div class="form-group">
                                             <label>Category</label>
                                             <select name="parent_ID" class="form-control">
-                                                <?php showCategoriesAddProduct($categorys_list)  ?>
+                                                <?php showCategoriesAU_edit($categorys_list, $product['parent_ID'])  ?>
                                             </select>
                                         </div>
                                     </div>

@@ -184,3 +184,17 @@ function showCategoriesAddProduct($categories, $parent_id = 0, $char = '')
         }
     }
 }
+
+function showCategoriesAddProduct_U($categories, $id, $parent_id = 0, $char = '')
+
+{
+    foreach ($categories as $key => $item) {
+        if ($item['parent_ID'] == $parent_id) {
+            echo '<option value="' . $item['id'] . '">';
+            echo $char . $item['category_name'];
+            echo '</option>';
+            unset($categories[$key]);
+            showCategoriesAddProduct_U($categories, $id, $item['id'], $char . ' ---- ||');
+        }
+    }
+}
